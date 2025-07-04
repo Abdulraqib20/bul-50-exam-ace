@@ -1,10 +1,10 @@
-
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Clock, ChevronLeft, ChevronRight, Flag } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
+import ThemeToggle from '@/components/ThemeToggle';
 
 interface Question {
   id: number;
@@ -88,27 +88,28 @@ const ExamInterface: React.FC<ExamInterfaceProps> = ({ questions, timeLimit, sec
   const answeredQuestions = answers.filter(answer => answer !== -1).length;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-2 sm:p-4">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 p-2 sm:p-4 transition-colors">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
-        <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 mb-4 sm:mb-6">
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-4 sm:p-6 mb-4 sm:mb-6 border border-gray-200 dark:border-gray-700">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-4 sm:gap-0">
             <div>
-              <h1 className="text-lg sm:text-2xl font-bold text-gray-800">BUL 506 {sectionName}</h1>
-              <p className="text-sm text-gray-600 mt-1">{questions.length} Questions</p>
+              <h1 className="text-lg sm:text-2xl font-bold text-gray-800 dark:text-gray-200">BUL 506 {sectionName}</h1>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">{questions.length} Questions</p>
             </div>
             <div className="flex items-center gap-3 sm:gap-4 w-full sm:w-auto">
-              <div className="flex items-center gap-2 text-base sm:text-lg font-semibold text-red-600">
+              <div className="flex items-center gap-2 text-base sm:text-lg font-semibold text-red-600 dark:text-red-400">
                 <Clock className="w-4 h-4 sm:w-5 sm:h-5" />
                 <span className="text-sm sm:text-base">{formatTime(timeLeft)}</span>
               </div>
+              <ThemeToggle />
               <Button onClick={handleSubmitExam} variant="destructive" size="sm" className="text-sm">
                 Submit
               </Button>
             </div>
           </div>
 
-          <div className="flex items-center justify-between text-xs sm:text-sm text-gray-600 mb-2">
+          <div className="flex items-center justify-between text-xs sm:text-sm text-gray-600 dark:text-gray-400 mb-2">
             <span>Question {currentQuestionIndex + 1} of {questions.length}</span>
             <span>{answeredQuestions} answered</span>
           </div>
@@ -116,21 +117,23 @@ const ExamInterface: React.FC<ExamInterfaceProps> = ({ questions, timeLimit, sec
         </div>
 
         {/* Question Card */}
-        <Card className="mb-4 sm:mb-6">
+        <Card className="mb-4 sm:mb-6 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
           <CardHeader className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0 p-4 sm:p-6">
-            <h2 className="text-base sm:text-lg font-semibold">Question {currentQuestionIndex + 1}</h2>
+            <h2 className="text-base sm:text-lg font-semibold text-gray-800 dark:text-gray-200">Question {currentQuestionIndex + 1}</h2>
             <Button
               variant="outline"
               size="sm"
               onClick={handleFlagQuestion}
-              className={`text-xs sm:text-sm ${flaggedQuestions.has(currentQuestionIndex) ? 'bg-yellow-100 text-yellow-700' : ''}`}
+              className={`text-xs sm:text-sm border-gray-300 dark:border-gray-600 ${flaggedQuestions.has(currentQuestionIndex)
+                ? 'bg-yellow-100 dark:bg-yellow-900/20 text-yellow-700 dark:text-yellow-400'
+                : 'hover:bg-gray-100 dark:hover:bg-gray-700'}`}
             >
               <Flag className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
               {flaggedQuestions.has(currentQuestionIndex) ? 'Flagged' : 'Flag'}
             </Button>
           </CardHeader>
           <CardContent className="p-4 sm:p-6 pt-0 sm:pt-0">
-            <p className="text-gray-800 mb-4 sm:mb-6 text-base sm:text-lg leading-relaxed">{currentQuestion.question}</p>
+            <p className="text-gray-800 dark:text-gray-200 mb-4 sm:mb-6 text-base sm:text-lg leading-relaxed">{currentQuestion.question}</p>
 
             <div className="space-y-3">
               {currentQuestion.options.map((option, index) => (
@@ -138,15 +141,15 @@ const ExamInterface: React.FC<ExamInterfaceProps> = ({ questions, timeLimit, sec
                   key={index}
                   onClick={() => handleAnswerSelect(index)}
                   className={`w-full text-left p-3 sm:p-4 rounded-lg border-2 transition-all duration-200 ${answers[currentQuestionIndex] === index
-                    ? 'border-blue-500 bg-blue-50 text-blue-800'
-                    : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
+                    ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20 text-blue-800 dark:text-blue-200'
+                    : 'border-gray-200 dark:border-gray-600 hover:border-gray-300 dark:hover:border-gray-500 hover:bg-gray-50 dark:hover:bg-gray-700 dark:bg-gray-800/50'
                     }`}
                 >
                   <div className="flex items-start">
-                    <span className="font-semibold mr-2 sm:mr-3 text-gray-500 mt-1 text-sm sm:text-base min-w-[20px]">
+                    <span className="font-semibold mr-2 sm:mr-3 text-gray-500 dark:text-gray-400 mt-1 text-sm sm:text-base min-w-[20px]">
                       {String.fromCharCode(65 + index)}.
                     </span>
-                    <span className="text-sm sm:text-base leading-relaxed">{option}</span>
+                    <span className="text-sm sm:text-base leading-relaxed text-gray-800 dark:text-gray-200">{option}</span>
                   </div>
                 </button>
               ))}
@@ -162,7 +165,7 @@ const ExamInterface: React.FC<ExamInterfaceProps> = ({ questions, timeLimit, sec
               onClick={handlePreviousQuestion}
               disabled={currentQuestionIndex === 0}
               variant="outline"
-              className="text-sm sm:text-base"
+              className="text-sm sm:text-base border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700"
             >
               <ChevronLeft className="w-4 h-4 mr-1 sm:mr-2" />
               <span className="hidden sm:inline">Previous</span>
@@ -170,10 +173,10 @@ const ExamInterface: React.FC<ExamInterfaceProps> = ({ questions, timeLimit, sec
             </Button>
 
             <div className="text-center">
-              <div className="text-sm sm:text-base font-medium text-gray-700">
+              <div className="text-sm sm:text-base font-medium text-gray-700 dark:text-gray-300">
                 Question {currentQuestionIndex + 1} of {questions.length}
               </div>
-              <div className="text-xs text-gray-500 mt-1">
+              <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
                 {answeredQuestions} answered • {flaggedQuestions.size} flagged
               </div>
             </div>
@@ -182,7 +185,7 @@ const ExamInterface: React.FC<ExamInterfaceProps> = ({ questions, timeLimit, sec
               onClick={handleNextQuestion}
               disabled={currentQuestionIndex === questions.length - 1}
               variant="outline"
-              className="text-sm sm:text-base"
+              className="text-sm sm:text-base border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700"
             >
               <span className="hidden sm:inline">Next</span>
               <span className="sm:hidden">Next</span>
@@ -191,8 +194,8 @@ const ExamInterface: React.FC<ExamInterfaceProps> = ({ questions, timeLimit, sec
           </div>
 
           {/* Question Grid Navigation */}
-          <div className="bg-white rounded-lg p-4 shadow-sm">
-            <h3 className="text-sm font-medium text-gray-700 mb-3">Question Navigator</h3>
+          <div className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow-sm border border-gray-200 dark:border-gray-700">
+            <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Question Navigator</h3>
             <div className="grid grid-cols-5 sm:grid-cols-10 md:grid-cols-15 gap-2">
               {questions.map((_, index) => (
                 <button
@@ -201,10 +204,10 @@ const ExamInterface: React.FC<ExamInterfaceProps> = ({ questions, timeLimit, sec
                   className={`aspect-square rounded text-xs sm:text-sm font-medium transition-colors ${index === currentQuestionIndex
                     ? 'bg-blue-600 text-white'
                     : answers[index] !== -1
-                      ? 'bg-green-100 text-green-700 border border-green-300'
+                      ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 border border-green-300 dark:border-green-600'
                       : flaggedQuestions.has(index)
-                        ? 'bg-yellow-100 text-yellow-700 border border-yellow-300'
-                        : 'bg-gray-100 text-gray-600 border border-gray-300 hover:bg-gray-200'
+                        ? 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400 border border-yellow-300 dark:border-yellow-600'
+                        : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 border border-gray-300 dark:border-gray-600 hover:bg-gray-200 dark:hover:bg-gray-600'
                     }`}
                   title={`Question ${index + 1}${answers[index] !== -1 ? ' (Answered)' : ''}${flaggedQuestions.has(index) ? ' (Flagged)' : ''}`}
                 >
@@ -217,19 +220,19 @@ const ExamInterface: React.FC<ExamInterfaceProps> = ({ questions, timeLimit, sec
             <div className="flex flex-wrap gap-4 mt-4 text-xs">
               <div className="flex items-center gap-2">
                 <div className="w-4 h-4 bg-blue-600 rounded"></div>
-                <span>Current</span>
+                <span className="text-gray-600 dark:text-gray-400">Current</span>
               </div>
               <div className="flex items-center gap-2">
-                <div className="w-4 h-4 bg-green-100 border border-green-300 rounded"></div>
-                <span>Answered</span>
+                <div className="w-4 h-4 bg-green-100 dark:bg-green-900/30 border border-green-300 dark:border-green-600 rounded"></div>
+                <span className="text-gray-600 dark:text-gray-400">Answered</span>
               </div>
               <div className="flex items-center gap-2">
-                <div className="w-4 h-4 bg-yellow-100 border border-yellow-300 rounded"></div>
-                <span>Flagged</span>
+                <div className="w-4 h-4 bg-yellow-100 dark:bg-yellow-900/30 border border-yellow-300 dark:border-yellow-600 rounded"></div>
+                <span className="text-gray-600 dark:text-gray-400">Flagged</span>
               </div>
               <div className="flex items-center gap-2">
-                <div className="w-4 h-4 bg-gray-100 border border-gray-300 rounded"></div>
-                <span>Unanswered</span>
+                <div className="w-4 h-4 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded"></div>
+                <span className="text-gray-600 dark:text-gray-400">Unanswered</span>
               </div>
             </div>
           </div>
