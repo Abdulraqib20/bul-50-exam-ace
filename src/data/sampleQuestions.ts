@@ -1,4 +1,3 @@
-
 export interface Question {
   id: number;
   question: string;
@@ -1299,8 +1298,40 @@ export const sampleQuestions: Question[] = [
 
 ];
 
+// Section organization (15 questions per section)
+export const QUESTIONS_PER_SECTION = 15;
+
+export const getSectionQuestions = (sectionIndex: number): Question[] => {
+  const startIndex = sectionIndex * QUESTIONS_PER_SECTION;
+  const endIndex = Math.min(startIndex + QUESTIONS_PER_SECTION, sampleQuestions.length);
+  return sampleQuestions.slice(startIndex, endIndex);
+};
+
+export const getSectionInfo = () => {
+  const totalSections = Math.ceil(sampleQuestions.length / QUESTIONS_PER_SECTION);
+  const sections = [];
+
+  for (let i = 0; i < totalSections; i++) {
+    const startQ = i * QUESTIONS_PER_SECTION + 1;
+    const endQ = Math.min((i + 1) * QUESTIONS_PER_SECTION, sampleQuestions.length);
+    const sectionQuestions = getSectionQuestions(i);
+
+    sections.push({
+      id: i,
+      name: `Section ${String.fromCharCode(65 + i)}`, // A, B, C, etc.
+      description: `Questions ${startQ}-${endQ}`,
+      questionCount: sectionQuestions.length,
+      questions: sectionQuestions
+    });
+  }
+
+  return sections;
+};
+
 // Export exam metadata
 export const examMetadata = {
   title: "BUL 506 - Engineering Law Past Questions",
-  totalQuestions: 112
+  totalQuestions: 112,
+  totalSections: Math.ceil(112 / QUESTIONS_PER_SECTION),
+  questionsPerSection: QUESTIONS_PER_SECTION
 };

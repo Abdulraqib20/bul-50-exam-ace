@@ -17,10 +17,11 @@ interface Question {
 interface ExamInterfaceProps {
   questions: Question[];
   timeLimit: number; // in minutes
+  sectionName?: string;
   onExamComplete: (score: number, answers: number[]) => void;
 }
 
-const ExamInterface: React.FC<ExamInterfaceProps> = ({ questions, timeLimit, onExamComplete }) => {
+const ExamInterface: React.FC<ExamInterfaceProps> = ({ questions, timeLimit, sectionName = 'Practice Exam', onExamComplete }) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState<number[]>(new Array(questions.length).fill(-1));
   const [timeLeft, setTimeLeft] = useState(timeLimit * 60); // convert to seconds
@@ -87,24 +88,27 @@ const ExamInterface: React.FC<ExamInterfaceProps> = ({ questions, timeLimit, onE
   const answeredQuestions = answers.filter(answer => answer !== -1).length;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-2 sm:p-4">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
-        <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
-          <div className="flex justify-between items-center mb-4">
-            <h1 className="text-2xl font-bold text-gray-800">BUL 50 Practice Exam</h1>
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-2 text-lg font-semibold text-red-600">
-                <Clock className="w-5 h-5" />
-                {formatTime(timeLeft)}
+        <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 mb-4 sm:mb-6">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-4 sm:gap-0">
+            <div>
+              <h1 className="text-lg sm:text-2xl font-bold text-gray-800">BUL 506 {sectionName}</h1>
+              <p className="text-sm text-gray-600 mt-1">{questions.length} Questions</p>
+            </div>
+            <div className="flex items-center gap-3 sm:gap-4 w-full sm:w-auto">
+              <div className="flex items-center gap-2 text-base sm:text-lg font-semibold text-red-600">
+                <Clock className="w-4 h-4 sm:w-5 sm:h-5" />
+                <span className="text-sm sm:text-base">{formatTime(timeLeft)}</span>
               </div>
-              <Button onClick={handleSubmitExam} variant="destructive">
-                Submit Exam
+              <Button onClick={handleSubmitExam} variant="destructive" size="sm" className="text-sm">
+                Submit
               </Button>
             </div>
           </div>
-          
-          <div className="flex items-center justify-between text-sm text-gray-600 mb-2">
+
+          <div className="flex items-center justify-between text-xs sm:text-sm text-gray-600 mb-2">
             <span>Question {currentQuestionIndex + 1} of {questions.length}</span>
             <span>{answeredQuestions} answered</span>
           </div>
@@ -112,38 +116,37 @@ const ExamInterface: React.FC<ExamInterfaceProps> = ({ questions, timeLimit, onE
         </div>
 
         {/* Question Card */}
-        <Card className="mb-6">
-          <CardHeader className="flex flex-row items-center justify-between">
-            <h2 className="text-lg font-semibold">Question {currentQuestionIndex + 1}</h2>
+        <Card className="mb-4 sm:mb-6">
+          <CardHeader className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0 p-4 sm:p-6">
+            <h2 className="text-base sm:text-lg font-semibold">Question {currentQuestionIndex + 1}</h2>
             <Button
               variant="outline"
               size="sm"
               onClick={handleFlagQuestion}
-              className={flaggedQuestions.has(currentQuestionIndex) ? 'bg-yellow-100 text-yellow-700' : ''}
+              className={`text-xs sm:text-sm ${flaggedQuestions.has(currentQuestionIndex) ? 'bg-yellow-100 text-yellow-700' : ''}`}
             >
-              <Flag className="w-4 h-4 mr-2" />
+              <Flag className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
               {flaggedQuestions.has(currentQuestionIndex) ? 'Flagged' : 'Flag'}
             </Button>
           </CardHeader>
-          <CardContent>
-            <p className="text-gray-800 mb-6 text-lg leading-relaxed">{currentQuestion.question}</p>
-            
+          <CardContent className="p-4 sm:p-6 pt-0 sm:pt-0">
+            <p className="text-gray-800 mb-4 sm:mb-6 text-base sm:text-lg leading-relaxed">{currentQuestion.question}</p>
+
             <div className="space-y-3">
               {currentQuestion.options.map((option, index) => (
                 <button
                   key={index}
                   onClick={() => handleAnswerSelect(index)}
-                  className={`w-full text-left p-4 rounded-lg border-2 transition-all duration-200 ${
-                    answers[currentQuestionIndex] === index
-                      ? 'border-blue-500 bg-blue-50 text-blue-800'
-                      : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
-                  }`}
+                  className={`w-full text-left p-3 sm:p-4 rounded-lg border-2 transition-all duration-200 ${answers[currentQuestionIndex] === index
+                    ? 'border-blue-500 bg-blue-50 text-blue-800'
+                    : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
+                    }`}
                 >
-                  <div className="flex items-center">
-                    <span className="font-semibold mr-3 text-gray-500">
+                  <div className="flex items-start">
+                    <span className="font-semibold mr-2 sm:mr-3 text-gray-500 mt-1 text-sm sm:text-base min-w-[20px]">
                       {String.fromCharCode(65 + index)}.
                     </span>
-                    <span>{option}</span>
+                    <span className="text-sm sm:text-base leading-relaxed">{option}</span>
                   </div>
                 </button>
               ))}
@@ -152,44 +155,84 @@ const ExamInterface: React.FC<ExamInterfaceProps> = ({ questions, timeLimit, onE
         </Card>
 
         {/* Navigation */}
-        <div className="flex justify-between items-center">
-          <Button
-            onClick={handlePreviousQuestion}
-            disabled={currentQuestionIndex === 0}
-            variant="outline"
-          >
-            <ChevronLeft className="w-4 h-4 mr-2" />
-            Previous
-          </Button>
+        <div className="space-y-4">
+          {/* Primary Navigation */}
+          <div className="flex justify-between items-center">
+            <Button
+              onClick={handlePreviousQuestion}
+              disabled={currentQuestionIndex === 0}
+              variant="outline"
+              className="text-sm sm:text-base"
+            >
+              <ChevronLeft className="w-4 h-4 mr-1 sm:mr-2" />
+              <span className="hidden sm:inline">Previous</span>
+              <span className="sm:hidden">Prev</span>
+            </Button>
 
-          <div className="flex gap-2">
-            {questions.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setCurrentQuestionIndex(index)}
-                className={`w-8 h-8 rounded text-sm font-medium transition-colors ${
-                  index === currentQuestionIndex
-                    ? 'bg-blue-600 text-white'
-                    : answers[index] !== -1
-                    ? 'bg-green-100 text-green-700 border border-green-300'
-                    : flaggedQuestions.has(index)
-                    ? 'bg-yellow-100 text-yellow-700 border border-yellow-300'
-                    : 'bg-gray-100 text-gray-600 border border-gray-300'
-                }`}
-              >
-                {index + 1}
-              </button>
-            ))}
+            <div className="text-center">
+              <div className="text-sm sm:text-base font-medium text-gray-700">
+                Question {currentQuestionIndex + 1} of {questions.length}
+              </div>
+              <div className="text-xs text-gray-500 mt-1">
+                {answeredQuestions} answered • {flaggedQuestions.size} flagged
+              </div>
+            </div>
+
+            <Button
+              onClick={handleNextQuestion}
+              disabled={currentQuestionIndex === questions.length - 1}
+              variant="outline"
+              className="text-sm sm:text-base"
+            >
+              <span className="hidden sm:inline">Next</span>
+              <span className="sm:hidden">Next</span>
+              <ChevronRight className="w-4 h-4 ml-1 sm:ml-2" />
+            </Button>
           </div>
 
-          <Button
-            onClick={handleNextQuestion}
-            disabled={currentQuestionIndex === questions.length - 1}
-            variant="outline"
-          >
-            Next
-            <ChevronRight className="w-4 h-4 ml-2" />
-          </Button>
+          {/* Question Grid Navigation */}
+          <div className="bg-white rounded-lg p-4 shadow-sm">
+            <h3 className="text-sm font-medium text-gray-700 mb-3">Question Navigator</h3>
+            <div className="grid grid-cols-5 sm:grid-cols-10 md:grid-cols-15 gap-2">
+              {questions.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentQuestionIndex(index)}
+                  className={`aspect-square rounded text-xs sm:text-sm font-medium transition-colors ${index === currentQuestionIndex
+                    ? 'bg-blue-600 text-white'
+                    : answers[index] !== -1
+                      ? 'bg-green-100 text-green-700 border border-green-300'
+                      : flaggedQuestions.has(index)
+                        ? 'bg-yellow-100 text-yellow-700 border border-yellow-300'
+                        : 'bg-gray-100 text-gray-600 border border-gray-300 hover:bg-gray-200'
+                    }`}
+                  title={`Question ${index + 1}${answers[index] !== -1 ? ' (Answered)' : ''}${flaggedQuestions.has(index) ? ' (Flagged)' : ''}`}
+                >
+                  {index + 1}
+                </button>
+              ))}
+            </div>
+
+            {/* Legend */}
+            <div className="flex flex-wrap gap-4 mt-4 text-xs">
+              <div className="flex items-center gap-2">
+                <div className="w-4 h-4 bg-blue-600 rounded"></div>
+                <span>Current</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-4 h-4 bg-green-100 border border-green-300 rounded"></div>
+                <span>Answered</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-4 h-4 bg-yellow-100 border border-yellow-300 rounded"></div>
+                <span>Flagged</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-4 h-4 bg-gray-100 border border-gray-300 rounded"></div>
+                <span>Unanswered</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

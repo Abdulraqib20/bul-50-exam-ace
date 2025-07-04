@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import ExamSetup from '@/components/ExamSetup';
 import ExamInterface from '@/components/ExamInterface';
 import ExamResults from '@/components/ExamResults';
-import { sampleQuestions, Question, examMetadata } from '@/data/sampleQuestions';
+import { sampleQuestions, Question, examMetadata, getSectionQuestions, getSectionInfo } from '@/data/sampleQuestions';
 
 type ExamState = 'setup' | 'taking' | 'results';
 
@@ -13,14 +13,27 @@ const Index = () => {
   const [timeLimit, setTimeLimit] = useState<number>(60);
   const [examScore, setExamScore] = useState<number>(0);
   const [examAnswers, setExamAnswers] = useState<number[]>([]);
+  const [currentSection, setCurrentSection] = useState<string>('');
 
-  const handleStartExam = (selectedTimeLimit: number, questionCount: number) => {
-    // Shuffle and select the specified number of questions
-    const shuffled = [...sampleQuestions].sort(() => 0.5 - Math.random());
-    const selected = shuffled.slice(0, Math.min(questionCount, sampleQuestions.length));
+  const handleStartExam = (selectedTimeLimit: number, questionCount: number, sectionIndex?: number) => {
+    let selectedQuestions: Question[];
+    let sectionName = '';
 
-    setCurrentQuestions(selected);
+    if (sectionIndex !== undefined && sectionIndex >= 0) {
+      // Section practice mode
+      selectedQuestions = getSectionQuestions(sectionIndex);
+      const sections = getSectionInfo();
+      sectionName = sections[sectionIndex].name;
+    } else {
+      // Full exam mode - shuffle and select the specified number of questions
+      const shuffled = [...sampleQuestions].sort(() => 0.5 - Math.random());
+      selectedQuestions = shuffled.slice(0, Math.min(questionCount, sampleQuestions.length));
+      sectionName = 'Full Exam';
+    }
+
+    setCurrentQuestions(selectedQuestions);
     setTimeLimit(selectedTimeLimit);
+    setCurrentSection(sectionName);
     setExamState('taking');
   };
 
@@ -35,6 +48,7 @@ const Index = () => {
     setCurrentQuestions([]);
     setExamScore(0);
     setExamAnswers([]);
+    setCurrentSection('');
   };
 
   const handleGoHome = () => {
@@ -42,6 +56,7 @@ const Index = () => {
     setCurrentQuestions([]);
     setExamScore(0);
     setExamAnswers([]);
+    setCurrentSection('');
   };
 
   switch (examState) {
@@ -58,6 +73,7 @@ const Index = () => {
         <ExamInterface
           questions={currentQuestions}
           timeLimit={timeLimit}
+          sectionName={currentSection}
           onExamComplete={handleExamComplete}
         />
       );
@@ -69,6 +85,7 @@ const Index = () => {
           totalQuestions={currentQuestions.length}
           answers={examAnswers}
           questions={currentQuestions}
+          sectionName={currentSection}
           onRetakeExam={handleRetakeExam}
           onGoHome={handleGoHome}
         />

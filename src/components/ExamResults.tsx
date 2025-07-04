@@ -18,6 +18,7 @@ interface ExamResultsProps {
   totalQuestions: number;
   answers: number[];
   questions: Question[];
+  sectionName?: string;
   onRetakeExam: () => void;
   onGoHome: () => void;
 }
@@ -27,6 +28,7 @@ const ExamResults: React.FC<ExamResultsProps> = ({
   totalQuestions,
   answers,
   questions,
+  sectionName = 'Practice Exam',
   onRetakeExam,
   onGoHome,
 }) => {
@@ -42,19 +44,22 @@ const ExamResults: React.FC<ExamResultsProps> = ({
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-2 sm:p-4">
       <div className="max-w-4xl mx-auto">
         {/* Results Summary */}
-        <Card className="mb-6">
-          <CardHeader className="text-center">
-            <CardTitle className="text-3xl font-bold mb-2">
-              {passed ? 'Congratulations! 🎉' : 'Keep Studying! 📚'}
-            </CardTitle>
-            <div className={`text-6xl font-bold mb-4 ${passed ? 'text-green-600' : 'text-red-600'}`}>
+        <Card className="mb-4 sm:mb-6">
+          <CardHeader className="text-center p-4 sm:p-6">
+            <div className="mb-2">
+              <div className="text-sm sm:text-base text-gray-600 mb-1">BUL 506 - {sectionName}</div>
+              <CardTitle className="text-2xl sm:text-3xl font-bold mb-2">
+                {passed ? 'Congratulations! 🎉' : 'Keep Studying! 📚'}
+              </CardTitle>
+            </div>
+            <div className={`text-4xl sm:text-6xl font-bold mb-4 ${passed ? 'text-green-600' : 'text-red-600'}`}>
               {percentage}%
             </div>
-            <div className="text-xl text-gray-600">
-              Grade: <span className="font-bold text-2xl">{getGrade(percentage)}</span>
+            <div className="text-lg sm:text-xl text-gray-600">
+              Grade: <span className="font-bold text-xl sm:text-2xl">{getGrade(percentage)}</span>
             </div>
           </CardHeader>
           <CardContent>
@@ -116,22 +121,21 @@ const ExamResults: React.FC<ExamResultsProps> = ({
                           </Badge>
                         </div>
                         <p className="text-gray-700 mb-3">{question.question}</p>
-                        
+
                         <div className="space-y-2">
                           {question.options.map((option, optionIndex) => {
                             const isUserAnswer = userAnswer === optionIndex;
                             const isCorrectAnswer = question.correctAnswer === optionIndex;
-                            
+
                             return (
                               <div
                                 key={optionIndex}
-                                className={`p-2 rounded text-sm ${
-                                  isCorrectAnswer
-                                    ? 'bg-green-100 text-green-800 border border-green-300'
-                                    : isUserAnswer && !isCorrect
+                                className={`p-2 rounded text-sm ${isCorrectAnswer
+                                  ? 'bg-green-100 text-green-800 border border-green-300'
+                                  : isUserAnswer && !isCorrect
                                     ? 'bg-red-100 text-red-800 border border-red-300'
                                     : 'bg-gray-50'
-                                }`}
+                                  }`}
                               >
                                 <span className="font-medium mr-2">
                                   {String.fromCharCode(65 + optionIndex)}.
