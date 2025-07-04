@@ -23,9 +23,9 @@ const ExamSetup: React.FC<ExamSetupProps> = ({ onStartExam, totalQuestions }) =>
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
       <div className="w-full max-w-2xl">
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-gray-800 mb-4">BUL 50 Exam Simulator</h1>
+          <h1 className="text-4xl font-bold text-gray-800 mb-4">BUL 506 Exam Ace</h1>
           <p className="text-lg text-gray-600">
-            Practice with past questions and test your knowledge
+            Engineering Law CBT Practice - Master your past questions
           </p>
         </div>
 
@@ -40,7 +40,7 @@ const ExamSetup: React.FC<ExamSetupProps> = ({ onStartExam, totalQuestions }) =>
                 <h3 className="font-semibold text-gray-800 mb-2">Questions Available</h3>
                 <p className="text-2xl font-bold text-blue-600">{totalQuestions}</p>
               </div>
-              
+
               <div className="bg-green-50 p-6 rounded-lg text-center">
                 <Award className="w-8 h-8 text-green-600 mx-auto mb-3" />
                 <h3 className="font-semibold text-gray-800 mb-2">Passing Grade</h3>
@@ -98,7 +98,7 @@ const ExamSetup: React.FC<ExamSetupProps> = ({ onStartExam, totalQuestions }) =>
             </div>
 
             <div className="flex justify-center mt-8">
-              <Button 
+              <Button
                 onClick={handleStartExam}
                 size="lg"
                 className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 px-8 py-3 text-lg"
@@ -111,7 +111,7 @@ const ExamSetup: React.FC<ExamSetupProps> = ({ onStartExam, totalQuestions }) =>
 
         <div className="text-center mt-6 text-gray-600">
           <p className="text-sm">
-            Good luck with your BUL 50 preparation! 🍀
+            Good luck with your BUL 506 Engineering Law preparation! 🍀
           </p>
         </div>
       </div>

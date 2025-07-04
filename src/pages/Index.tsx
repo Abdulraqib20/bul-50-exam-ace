@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import ExamSetup from '@/components/ExamSetup';
 import ExamInterface from '@/components/ExamInterface';
 import ExamResults from '@/components/ExamResults';
-import { sampleQuestions, Question } from '@/data/sampleQuestions';
+import { sampleQuestions, Question, examMetadata } from '@/data/sampleQuestions';
 
 type ExamState = 'setup' | 'taking' | 'results';
 
@@ -18,7 +18,7 @@ const Index = () => {
     // Shuffle and select the specified number of questions
     const shuffled = [...sampleQuestions].sort(() => 0.5 - Math.random());
     const selected = shuffled.slice(0, Math.min(questionCount, sampleQuestions.length));
-    
+
     setCurrentQuestions(selected);
     setTimeLimit(selectedTimeLimit);
     setExamState('taking');
@@ -52,7 +52,7 @@ const Index = () => {
           totalQuestions={sampleQuestions.length}
         />
       );
-    
+
     case 'taking':
       return (
         <ExamInterface
@@ -61,7 +61,7 @@ const Index = () => {
           onExamComplete={handleExamComplete}
         />
       );
-    
+
     case 'results':
       return (
         <ExamResults
@@ -73,7 +73,7 @@ const Index = () => {
           onGoHome={handleGoHome}
         />
       );
-    
+
     default:
       return null;
   }
