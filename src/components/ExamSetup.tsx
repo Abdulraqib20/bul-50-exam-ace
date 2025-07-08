@@ -349,7 +349,7 @@ const ExamSetup: React.FC<ExamSetupProps> = ({ onStartExam, totalQuestions }) =>
         <div className="text-center mt-6 sm:mt-8">
           <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-lg p-4 border border-gray-200 dark:border-gray-700">
             <p className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-              build with ❤️ by <a href="https://github.com/Abdulraqib20" className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300">raqibcodes</a>
+              built with ❤️ by <a href="" className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300">raqibcodes</a>
             </p>
           </div>
         </div>
