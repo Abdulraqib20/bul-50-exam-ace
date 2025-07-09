@@ -126,8 +126,8 @@ export const sampleQuestions: Question[] = [
       "S. 2(3) Coren Act",
       "S.3 (2) Coren Act",
     ],
-    correctAnswer: 1,
-    explanation: "Section 2(g) of the COREN Act deals with induction of registered engineering technicians"
+    correctAnswer: 0,
+    explanation: "Section 2 of the COREN Act deals with induction of registered engineering technicians"
   },
   {
     id: 11,
@@ -627,8 +627,8 @@ export const sampleQuestions: Question[] = [
       "Consideration must not be illegal",
       "Consideration not be vague",
     ],
-    correctAnswer: 0,
-    explanation: "The rule 'Consideration must not be past' is incorrect - consideration can be past in some cases"
+    correctAnswer: 1,
+    explanation: "Consideration need not be inadequate"
   },
   {
     id: 54,

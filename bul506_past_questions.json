@@ -119,8 +119,8 @@
         "S. 2(3) Coren Act",
         "S.3 (2) Coren Act"
       ],
-      "correctAnswer": "B",
-      "explanation": "Section 2(g) of the COREN Act deals with induction of registered engineering technicians"
+      "correctAnswer": "A",
+      "explanation": "Section 2 of the COREN Act deals with induction of registered engineering technicians"
     },
     {
       "id": 11,
@@ -620,8 +620,8 @@
         "Consideration must not be illegal",
         "Consideration not be vague"
       ],
-      "correctAnswer": "A",
-      "explanation": "The rule 'Consideration must not be past' is incorrect - consideration can be past in some cases"
+      "correctAnswer": "B",
+      "explanation": "Consideration need not be inadequate"
     },
     {
       "id": 54,
