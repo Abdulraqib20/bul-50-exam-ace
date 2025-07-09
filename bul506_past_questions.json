@@ -225,8 +225,8 @@
         "TRUE",
         "FALSE"
       ],
-      "correctAnswer": "A",
-      "explanation": "This is a true/false question with TRUE as the correct answer"
+      "correctAnswer": "B",
+      "explanation": "Conditional acceptance is not valid acceptance in contract law"
     },
     {
       "id": 20,
@@ -1051,9 +1051,9 @@
       "id": 91,
       "question": "In the case of ........... the court held that in false imprisonment, restraint must be complete and total",
       "options": [
-        "Bird v. jone",
-        "Jone v Bird",
-        "Bird jone v Jone Bird",
+        "Bird v. Jones",
+        "Jones v Bird",
+        "Bird Jones v Jones Bird",
         "Bird v.Bird"
       ],
       "correctAnswer": "A",
@@ -1111,11 +1111,11 @@
       "options": [
         "Donoghue v stevenson",
         "Aigoro v, Anabuwa",
-        "Bird v jone",
-        "jone v Bird"
+        "Bird v Jones",
+        "Jones v Bird"
       ],
-      "correctAnswer": "A",
-      "explanation": "Donoghue v Stevenson IS a classical case on negligence (the question asks for the exception)"
+      "correctAnswer": "B",
+      "explanation": "Aigoro v Anabuwa is NOT a classical case on negligence (the question asks for the exception)"
     },
     {
       "id": 97,
@@ -1150,8 +1150,8 @@
         "Former contract",
         "Informer contract"
       ],
-      "correctAnswer": "A",
-      "explanation": "Formal contract IS a form that must be signed, sealed and delivered (the question asks for the exception)"
+      "correctAnswer": "B",
+      "explanation": "Informal contract does NOT need to be signed, sealed and delivered (the question asks for the exception)"
     },
     {
       "id": 100,
@@ -1476,8 +1476,8 @@
         "Former contract",
         "Informer contract"
       ],
-      "correctAnswer": "A",
-      "explanation": "Formal contract IS the form that must be signed sealed and delivered"
+      "correctAnswer": "B",
+      "explanation": "Informal contract does NOT need to be signed, sealed and delivered (the question asks for the exception)"
     },
     {
       "id": 130,

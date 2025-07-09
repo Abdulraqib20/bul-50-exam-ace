@@ -232,8 +232,8 @@ export const sampleQuestions: Question[] = [
       "TRUE",
       "FALSE",
     ],
-    correctAnswer: 0,
-    explanation: "This is a true/false question with TRUE as the correct answer"
+    correctAnswer: 1,
+    explanation: "Conditional acceptance is not valid acceptance in contract law"
   },
   {
     id: 20,
@@ -1058,9 +1058,9 @@ export const sampleQuestions: Question[] = [
     id: 91,
     question: "In the case of ........... the court held that in false imprisonment, restraint must be complete and total",
     options: [
-      "Bird v. jone",
-      "Jone v Bird",
-      "Bird jone v Jone Bird",
+      "Bird v. Jones",
+      "Jones v Bird",
+      "Bird Jones v Jones Bird",
       "Bird v.Bird",
     ],
     correctAnswer: 0,
@@ -1118,11 +1118,11 @@ export const sampleQuestions: Question[] = [
     options: [
       "Donoghue v stevenson",
       "Aigoro v, Anabuwa",
-      "Bird v jone",
-      "jone v Bird",
+      "Bird v Jones",
+      "Jones v Bird",
     ],
-    correctAnswer: 0,
-    explanation: "Donoghue v Stevenson IS a classical case on negligence (the question asks for the exception)"
+    correctAnswer: 1,
+    explanation: "Aigoro v Anabuwa is NOT a classical case on negligence (the question asks for the exception)"
   },
   {
     id: 97,
@@ -1157,8 +1157,8 @@ export const sampleQuestions: Question[] = [
       "Former contract",
       "Informer contract",
     ],
-    correctAnswer: 0,
-    explanation: "Formal contract IS a form that must be signed, sealed and delivered (the question asks for the exception)"
+    correctAnswer: 1,
+    explanation: "Informal contract does NOT need to be signed, sealed and delivered (the question asks for the exception)"
   },
   {
     id: 100,
@@ -1483,8 +1483,8 @@ export const sampleQuestions: Question[] = [
       "Former contract",
       "Informer contract",
     ],
-    correctAnswer: 0,
-    explanation: "Formal contract IS the form that must be signed sealed and delivered"
+    correctAnswer: 1,
+    explanation: "Informal contract does NOT need to be signed, sealed and delivered (the question asks for the exception)"
   },
   {
     id: 130,
